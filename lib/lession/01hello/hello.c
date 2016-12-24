@@ -3,8 +3,7 @@
 //
 
 #include <stdio.h>
-#include <string.h>
-#include <assert.h>
+
 
 /**
  * 打印hello world
