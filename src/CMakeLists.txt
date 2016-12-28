@@ -3,6 +3,6 @@ set(APP_SRC main.c)
 
 #生成可执行文件
 add_executable(CSTANDRAD ${APP_SRC})
-target_link_libraries(CSTANDRAD m libmath libhello libtime libassert  libstdlib)
+target_link_libraries(CSTANDRAD m pcre libmath libhello libtime libassert  libstdlib libpreg libfunction)
 
 install(TARGETS CSTANDRAD DESTINATION bin)
