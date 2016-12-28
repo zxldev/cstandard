@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 
 
 #include <pcre.h>
@@ -106,6 +107,50 @@ void printStdlib(){
     strcpy( command, "ls -l" );
     system(command);
 
+    //排序
+
+    char str_array[][20] = {"gh","ef","cd","ab"};
+
+    char * ptr_item;
+    char searchkey[20] = "ab";
+
+    printf ("Enter a searchkey: ab\n");
+    //scanf ("%s", &searchkey);
+
+    /* sort the elements of the array */
+    qsort(str_array,4,20,(int (*)(const void *,const void *))strcmp);
+
+    //搜索
+    ptr_item = (char*)
+            bsearch (searchkey,str_array,4,20,(int(*)
+                    (const void*,const void*)) strcmp);
+
+    if (ptr_item!=NULL)
+        printf ("%s found in the array.\n",ptr_item);
+    else
+        printf ("%s not found in the array.\n",searchkey);
+
+    //abs
+    int nIntValue = -6;
+    printf("abs value of %d is %d\n",nIntValue,abs(nIntValue));
+
+    //labs
+    long int lNIntValue = -65535;
+    printf("abs value of %ld is %ld\n",lNIntValue,labs(lNIntValue));
+
+    time_t t;
+    int n = 5;
+
+    //srand
+    /* Intializes random number generator */
+    srand((unsigned) time(&t));
+
+    /* Print 5 random numbers from 0 to 50 */
+    for( i = 0 ; i < n ; i++ )
+    {
+        //rand
+        printf("%d\n", rand() % 500);
+    }
 
 
 }
