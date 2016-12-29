@@ -3,12 +3,18 @@
 #include "04math/l_math.h"
 #include <06stdlib/l_stdlib.h>
 #include "08time/l_time.h"
+#include "config.h"
 #include <preg.h>
 #include <memory.h>
 #include <stdio.h>
 #include <09function/l_function.h>
+#include <sds.h>
+extern struct Config conf;
 
 int main(int argc, char *argv[]){
+
+    conf.redisconfig.password;
+
     printHello();
     printKeywords();
     printMath();
@@ -27,7 +33,9 @@ int main(int argc, char *argv[]){
     for(i=0;i<rc;i++){
         puts(matches[i]);
     }
-
+    //SDS测试
+    sds sdsstring = sdsnew("ssss");
+    printf("sdsString:%s\n",sdsstring);
 
     callerP();
     return 0;

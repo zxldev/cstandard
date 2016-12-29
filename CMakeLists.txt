@@ -9,6 +9,7 @@ project(CSTANDRAD)
 #指定了头文件所在的目录
 include_directories(lib/lession)
 include_directories(lib/common)
+include_directories(lib/sds)
 
 #源码
 add_subdirectory(src)
