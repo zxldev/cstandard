@@ -3,3 +3,6 @@ cmake-build-debug/*
 bin/*
 *.out
 lib/sds
+
+#配置文件
+src/conf/c.conf

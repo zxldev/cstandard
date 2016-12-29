@@ -8,13 +8,47 @@
 #include <memory.h>
 #include <stdio.h>
 #include <09function/l_function.h>
-#include <sds.h>
-extern struct Config conf;
+#include <07string/l_string.h>
+#include <hiredis/hiredis.h>
+#include <stdlib.h>
+
+extern struct Config server;
+/**
+ * redis
+ */
+void callRedis(){
+    //redis调用
+    redisContext *redis = redisConnect(
+            server.redisconfig.serverIP,server.redisconfig.port
+    );
+    redisReply* reply= redisCommand(redis, "auth %s",
+                                    server.redisconfig.password
+    );
+    if (reply==NULL||reply->type == REDIS_REPLY_ERROR) {
+        /* Authentication failed */
+        exit(1);
+    }
+    freeReplyObject(reply);
+
+    reply = redisCommand(redis,"set hello world");
+    if(reply==NULL||reply->type == REDIS_REPLY_ERROR){
+        exit(1);
+    }
+    freeReplyObject(reply);
+
+    reply = redisCommand(redis,"get hello");
+    if(reply==NULL||reply->type == REDIS_REPLY_ERROR){
+        exit(1);
+    }
+
+    printf("The value of 'hello' is %s.\n",reply->str);
+    freeReplyObject(reply);
+}
 
 int main(int argc, char *argv[]){
-
-    conf.redisconfig.password;
-
+    //TODO 修改这个绝对路径
+    loadServerConfig("/alidata/workspace/c/cstandard/src/conf/c.conf","");
+    server.redisconfig.password;
     printHello();
     printKeywords();
     printMath();
@@ -22,7 +56,7 @@ int main(int argc, char *argv[]){
     printClock();
     printStdlib();
     open_record("ss");
-
+    mutiStringArray();
     //
     char pattern[50],subject[50];
     int i,rc;
@@ -38,5 +72,6 @@ int main(int argc, char *argv[]){
     printf("sdsString:%s\n",sdsstring);
 
     callerP();
+    callRedis();
     return 0;
 }

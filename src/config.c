@@ -9,9 +9,16 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <time.h>
-#include <sds.h>
+#include <hiredis/sds.h>
 
 struct Config server;
+
+char *zstrdup(const char *s) {
+    size_t l = strlen(s)+1;
+    char *p = malloc(l);
+    memcpy(p,s,l);
+    return p;
+}
 
 void loadServerConfigFromString(char *config) {
     char *err = NULL;
@@ -46,11 +53,13 @@ void loadServerConfigFromString(char *config) {
         sdstolower(argv[0]);
 
         /* Execute config directives */
-        if (!strcasecmp(argv[0],"save")) {
-
-        } else if (!strcasecmp(argv[0],"dir") && argc == 2) {
-
-        }else {
+        if (!strcasecmp(argv[0],"redisip")) {
+            server.redisconfig.serverIP = zstrdup(argv[1]);;
+        } else  if (!strcasecmp(argv[0],"redisport")) {
+            server.redisconfig.port = atoi(argv[1]);;
+        } else if (!strcasecmp(argv[0],"redispassword")) {
+            server.redisconfig.password = zstrdup(argv[1]);;
+        } else {
             err = "Bad directive or wrong number of arguments"; goto loaderr;
         }
         sdsfreesplitres(argv,argc);
