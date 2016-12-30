@@ -1,0 +1,10 @@
+#redis配置信息
+redisip 123.56.150.98
+redisport 6370
+redispassword "Xiaodada1"
+
+#日志配信息
+#logfilepath ""
+#loglevel ""
+#是否记录系统日志
+#syslog_enabled 0

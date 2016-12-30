@@ -5,4 +5,4 @@ bin/*
 lib/sds
 
 #配置文件
-src/conf/c.conf
+c.conf

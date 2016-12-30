@@ -5,6 +5,9 @@ set(APP_SRC main.c config.c)
 add_executable(CSTANDRAD ${APP_SRC})
 target_link_libraries(CSTANDRAD m pcre libmath libhello libtime libassert  libstdlib libpreg libfunction libstring  hiredis)
 
-install(TARGETS CSTANDRAD DESTINATION bin)
-
 set_property(TARGET CSTANDRAD PROPERTY C_STANDARD 99)
+
+#复制文件到指定路径
+file(COPY ${CSTANDRAD_SOURCE_DIR}/src/conf DESTINATION ${CSTANDRAD_BINARY_DIR}/src)
+
+install(TARGETS CSTANDRAD DESTINATION bin)

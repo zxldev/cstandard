@@ -11,6 +11,7 @@
 #include <07string/l_string.h>
 #include <hiredis/hiredis.h>
 #include <stdlib.h>
+#include <zconf.h>
 
 extern struct Config server;
 /**
@@ -41,13 +42,21 @@ void callRedis(){
         exit(1);
     }
 
-    printf("The value of 'hello' is %s.\n",reply->str);
+    printf("===========The value of 'hello' is %s.\n",reply->str);
     freeReplyObject(reply);
 }
 
+void init(){
+    server.logfile = sdsempty();
+}
+
 int main(int argc, char *argv[]){
+
+    init();
     //TODO 修改这个绝对路径
-    loadServerConfig("/alidata/workspace/c/cstandard/src/conf/c.conf","");
+    char buf[200];
+    getcwd(buf,sizeof(buf));
+    loadServerConfig(strcat(buf,"/conf/c.conf"),"");
     server.redisconfig.password;
     printHello();
     printKeywords();
