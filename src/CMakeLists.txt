@@ -3,7 +3,7 @@ set(APP_SRC main.c config.c)
 
 #生成可执行文件
 add_executable(CSTANDRAD ${APP_SRC})
-target_link_libraries(CSTANDRAD m pcre libmath libhello libtime libassert  libstdlib libpreg libfunction libstring  hiredis)
+target_link_libraries(CSTANDRAD m pcre libmath libhello libtime libassert  libstdlib libcommon libfunction libstring  hiredis)
 
 set_property(TARGET CSTANDRAD PROPERTY C_STANDARD 99)
 

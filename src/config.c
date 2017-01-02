@@ -10,8 +10,25 @@
 #include <sys/time.h>
 #include <time.h>
 #include <hiredis/sds.h>
+#include <util.h>
 
 struct Config server;
+
+void initConfig(int argc, char *argv[]){
+
+    int j;
+    server.executable = getAbsolutePath(argv[0]);
+    server.exec_argv = malloc(sizeof(char*)*(argc+1));
+    server.exec_argv[argc] = NULL;
+    for (j = 0; j < argc; j++) server.exec_argv[j] = zstrdup(argv[j]);
+
+
+    server.logfile = sdsempty();
+    server.verbosity = CONFIG_DEFAULT_VERBOSITY;
+}
+
+
+
 
 char *zstrdup(const char *s) {
     size_t l = strlen(s)+1;
@@ -98,10 +115,16 @@ void loadServerConfig(char *filename, char *options) {
         //关闭文件
         if (fp != stdin) fclose(fp);
     }
+    /* Append the additional options */
+    if (options) {
+        config = sdscat(config,"\n");
+        config = sdscat(config,options);
+    }
+
     loadServerConfigFromString(config);
 }
 
-void serverLog(int level, const char *fmt, ...){
+void serverLog(int level, const char *fmt, ...) {
     va_list ap;
     char msg[LOG_MAX_LEN];
 

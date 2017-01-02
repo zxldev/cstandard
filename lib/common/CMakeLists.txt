@@ -1,2 +1,2 @@
-set(LIB_SRC preg.c)
-add_library(libpreg ${LIB_SRC})
+set(LIB_SRC preg.c util.c)
+add_library(libcommon ${LIB_SRC})
